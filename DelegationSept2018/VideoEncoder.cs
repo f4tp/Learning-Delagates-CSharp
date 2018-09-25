@@ -23,7 +23,7 @@ namespace DelegationSept2018
         public delegate void VideoEncodedEventHandler(object source, EventArgs args);
         public event VideoEncodedEventHandler VideoEncoded;
 
-        public void Encode(VideoEncoder videoIn)
+        public void Encode(Video videoIn)
         {
             Console.WriteLine("Encoding Video");
             Thread.Sleep(3000);
