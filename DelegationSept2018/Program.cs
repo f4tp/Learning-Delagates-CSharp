@@ -11,14 +11,20 @@ namespace DelegationSept2018
             var video = new Video(){Title = "Video 1"};
             var videoEncoder = new VideoEncoder(); //publisher
             var mailService = new MailService(); //subscriber
+            var messageService = new MessageService();//subscriber
+            #region
             //the last part of thsi routine is a metho, however no brackets are needed as we are not makign a call to 
             //it... instead we are saying this is a refernewce / pointer to that method... which will be called elsewhere in the interaction
             //these two lines below have to be done in that order, otherwise teh video encoder will not have a subscriber ready
             //up to 19:19 on video
+            #endregion
             videoEncoder.VideoEncoded += mailService.OnVideoEncoded;
+            videoEncoder.VideoEncoded += messageService.OnVideoEncoded;
             videoEncoder.Encode(video);
         }
     }
+
+    
 
 
 

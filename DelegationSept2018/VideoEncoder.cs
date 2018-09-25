@@ -18,22 +18,27 @@ namespace DelegationSept2018
         //... a sit is a type of event
         //object contains the source of the event
         //Event args hold additional data about the event you may want to send
-        //Question - what additional data may I want to send across?
+        //Question - what additional data may I want to send across? - answer - teh VideoEventArgs class generate sthese... take a look
+        //the delegate then is just a reference to a method thatcan be added to the VideoEncoder.VideoEncoded += messageService.OnVideoEncoded 
+        //public delegate void VideoEncodedEventHandler(object sourcein, EventArgs args);
+        //the above code was a more vague type of EventArgs objetc, we have created a new one to send across teh data
+        //about teh video / about teh event that is being called
+        //also, the OnVideoEncoded method call now needs a video so it has been updated... and in teh method declaration below - OnVideoEncoded(Video videoin)
         #endregion
-        public delegate void VideoEncodedEventHandler(object source, EventArgs args);
+        public delegate void VideoEncodedEventHandler(object sourcein, VideoEventArgs args);
         public event VideoEncodedEventHandler VideoEncoded;
 
         public void Encode(Video videoIn)
         {
             Console.WriteLine("Encoding Video");
             Thread.Sleep(3000);
-            OnVideoEncoded();
+            OnVideoEncoded(videoIn);
         }
         #region
         //as per convention / by .Net framework, the called event from stage 3 should be 
         //protected virtual void
         #endregion
-        protected virtual void OnVideoEncoded()
+        protected virtual void OnVideoEncoded(Video videoin)
         {
             #region
             //notify subscribers... as per observer pattern
@@ -44,8 +49,10 @@ namespace DelegationSept2018
             {
                 #region
                 //use EventArgs.Empty when you do not wish to send any further data about the event
+                //Event args changed from VideoEncoded(this, EventArgs.Empty); to below because the object is now not an event args but a VideoEventArgs
+                //new VideoEventArgs(){Video = videoin}); thsi means there is no construcrtor that accepts a video, but there is a video property for the VideoEventArgs, it can be initialised for it like this
                 #endregion
-                VideoEncoded(this, EventArgs.Empty);
+                VideoEncoded(this, new VideoEventArgs(){Video = videoin});
             }
         }
     }
