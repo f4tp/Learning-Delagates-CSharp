@@ -25,9 +25,19 @@ namespace DelegationSept2018
         //about teh video / about teh event that is being called
         //also, the OnVideoEncoded method call now needs a video so it has been updated... and in teh method declaration below - OnVideoEncoded(Video videoin)
         #endregion
-        public delegate void VideoEncodedEventHandler(object sourcein, VideoEventArgs args);
-        public event VideoEncodedEventHandler VideoEncoded;
-
+            
+        #region
+        //public delegate void VideoEncodedEventHandler(object sourcein, VideoEventArgs args);
+        //public event VideoEncodedEventHandler VideoEncoded;
+        //the above two lines of code area literal declartion, but it can be done with an event declaration in anewer version of .net framework... line below 
+        //so thsi single line uses generics to pass the type in... so both lines of code can be done in one line of code
+        #endregion
+        public EventHandler<VideoEventArgs> VideoEncoded;
+        #region
+        //below is an example of creating an event / delgate without send an eventargs object weith details about teh object / event
+        //public EventHandler VideoEncoded;
+        #endregion
+            
         public void Encode(Video videoIn)
         {
             Console.WriteLine("Encoding Video");
